@@ -1,27 +1,101 @@
 # TeamAppAngularTutorial
 
+## First install Angular CLI
+```$ npm install -g @angular/cli```
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.6.
 
-## Development server
+## Create angular project from scratch
+```$ ng new team-app-angular-tutorial```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Run application
+Go to new application directory and run app: ```$ ng serve```
+On page http://localhost:4200 you will see main page of application.
 
-## Code scaffolding
+## Some improvements 
+### Change main page
+Change header to "Welcome to Team App" and add link "My team"
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Create module for My team
+Go to src/app directory and run a command:
 
-## Build
+```$ ng generate module my-team --routing```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+The above command generate module and path for routing. Our module will contains: 
+- a team list
+- form to add the new team
 
-## Running unit tests
+### Create components for team list and form to add new team
+Go to my-team directory and run a commands:
+- the team list: ```$ ng generate component team-list```
+- form to add the new team: ```$ ng generate component new-team```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Above commands added in my-team.module components in declarations and generated sub folders with:
+- css 
+- html
+- component correspondent with html
+- test for the component
 
-## Running end-to-end tests
+### Add path for routing and activate link on main page
+In file my-team-routing.module.ts add routings path:
+```$xslt
+const routes: Routes = [
+  {
+    path: 'team',
+    component: TeamListComponent
+  },
+  {
+    path: 'team/new',
+    component: NewTeamComponent
+  }
+];
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+In app.component.html add link to new team list:
+```<h2><a routerLink="/team">My team</a></h2>```
 
-## Further help
+Try run application: ```$ ng serve```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+You see that link to team doesn't work. Reason is that we forget to add global routing in our app. During 
+generate app we should add have command: 
+
+```$ ng new team-app-angular-tutorial --routing```
+
+So now in app directory add file app-routing.module.ts which contains:
+
+```$xslt
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+
+const routes: Routes = [
+  {
+    path: '',
+    children: []
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+
+and import in app.module.ts new routing:
+```
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    MyTeamModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+After this operation when you click on link you will see on page message "team-list works! "
