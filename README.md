@@ -97,5 +97,7 @@ and import in app.module.ts new routing:
 })
 export class AppModule { }
 ```
+And finally add in app.component.html line where will be displayed components <router-outlet></router-outlet>
+
 
 After this operation when you click on link you will see on page message "team-list works! "
