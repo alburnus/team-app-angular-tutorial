@@ -99,5 +99,35 @@ export class AppModule { }
 ```
 And finally add in app.component.html line where will be displayed components <router-outlet></router-outlet>
 
+After this operation when you click on link you will see on page "team-list works!" message.
 
-After this operation when you click on link you will see on page message "team-list works! "
+## CREATE SERVICE
+
+### Get all teams
+In src/app/my-team create service for requests.
+ 
+Call command which create Injectable service team.service.ts and add HttpClient library.
+
+```$ ng g s team``` 
+
+In file team-list.component.html create table which displayed teams name retrieved from TeamService.
+```angular2html
+<table>
+  <thead>
+  <tr>
+    <th>Team name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let team of teams">
+    <td>{{team.name}}</td>
+  </tr>
+  </tbody>
+</table>
+```
+
+In my-team.module.ts in section Providers add new service TeamService and in app.module.ts in imports add HttpClientModule. 
+
+### Create new team
+
+## ADD BOOTSTRAP CSS
