@@ -156,7 +156,7 @@ But before that you have to add in imports section extra module "FormsModule" in
 ```angular2html
 <div>
   <label>Team name:
-    <input [(ngModel)]="team.name" placeholder="team name">
+    <input [(ngModel)]="team.name" id="teamName" name="teamName">
   </label>
 </div>
 ```  
@@ -169,7 +169,7 @@ and on the page add Save button. After some changes html should look like:
 <div>
   <form>
     <label>Team name:
-      <input [(ngModel)]="team.name" placeholder="team name" id="teamName" name="teamName">
+      <input [(ngModel)]="team.name" id="teamName" name="teamName">
     </label>
     <button type="button" (click)="create()">Add</button>
   </form>
@@ -194,9 +194,69 @@ and after that in NewTeamComponent change implementation of function create():
     );
   }
 ```
-
-
-
   
 
 ## ADD BOOTSTRAP CSS
+The easiest way is just add in index.html link to css: 
+```angular2html
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+``` 
+otherwise we can import css by added in style.css line of code, but for that we must install package by npm first ($ npm install --save bootstrap font-awesome) - it's out of scope of this tutorial. 
+```angular2html
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.css";
+```
+
+Now is time to add some classes to our html elements :)
+- for button: class="btn btn-success"
+- for table element: class="table table-dark"
+- new implementation for app.component.html:
+```angular2html
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/team">My team</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/team/new">New team</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<router-outlet></router-outlet>
+
+```
+
+## EXTRA : add alert in newTeam
+- in NewTeamComponent add:
+```angular2html
+  message: string;
+  showMessage: boolean;
+  messageClass: string;
+  
+  (...)
+  
+   create() {
+      this.teamService.create(this.team).subscribe(result => {
+          this.team = {};
+          this.message = 'Team saved';
+          this.messageClass = 'alert alert-success';
+          this.showMessage = true;
+        },
+        error1 => {
+          console.log(error1);
+          this.message = error1.message;
+          this.messageClass = 'alert alert-danger';
+          this.showMessage = true;
+        }
+      );
+    }
+```
+
+- in HTML add:
+```angular2html
+<div class={{messageClass}} role="alert" *ngIf="showMessage">
+  {{message}}
+</div>
+```

@@ -1,12 +1,12 @@
-<p>
-  Add new team
-</p>
-
+<div class={{messageClass}} role="alert" *ngIf="showMessage">
+  {{message}}
+</div>
 <div>
   <form>
-    <label>Team name:
-      <input [(ngModel)]="team.name" placeholder="team name" id="teamName" name="teamName">
-    </label>
-    <button type="button" (click)="create()">Add</button>
+    <div class="form-group">
+      <label for="teamName">Team name:</label>
+      <input [(ngModel)]="team.name" id="teamName" name="teamName" class="form-control">
+    </div>
+    <button type="button" (click)="create()" class="btn btn-success">Add</button>
   </form>
 </div>
