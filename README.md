@@ -260,3 +260,7 @@ Now is time to add some classes to our html elements :)
   {{message}}
 </div>
 ```
+
+## USEFUL LINKS
+- https://getbootstrap.com/docs/4.1/getting-started/introduction/ 
+- https://angular.io/guide/quickstart 
