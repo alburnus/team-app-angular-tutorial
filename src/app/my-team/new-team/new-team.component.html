@@ -1,3 +1,12 @@
 <p>
-  new-team works!
+  Add new team
 </p>
+
+<div>
+  <form>
+    <label>Team name:
+      <input [(ngModel)]="team.name" placeholder="team name" id="teamName" name="teamName">
+    </label>
+    <button type="button" (click)="create()">Add</button>
+  </form>
+</div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TeamService} from '../team.service';
 
 @Component({
   selector: 'app-new-team',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewTeamComponent implements OnInit {
 
-  constructor() { }
+  team: any = {};
+
+  constructor(private teamService: TeamService) {
+  }
 
   ngOnInit() {
   }
 
+  create() {
+    this.teamService.create(this.team).subscribe(result => {
+        this.team = {};
+      },
+      error1 => {
+        console.log(error1);
+      }
+    );
+  }
 }

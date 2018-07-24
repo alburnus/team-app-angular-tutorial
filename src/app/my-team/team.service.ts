@@ -13,4 +13,8 @@ export class TeamService {
   getAll(): Observable<Array<any>> {
     return this.http.get<Array<any>>(this.apiUrl);
   }
+
+  create(team: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, team);
+  }
 }

@@ -1,4 +1,5 @@
 # TeamAppAngularTutorial
+README is still before corrections, so it is possible that have some mistakes. 
 
 ## First install Angular CLI
 ```$ npm install -g @angular/cli```
@@ -128,6 +129,74 @@ In file team-list.component.html create table which displayed teams name retriev
 
 In my-team.module.ts in section Providers add new service TeamService and in app.module.ts in imports add HttpClientModule. 
 
-### Create new team
+### Create a new team
+Now is time to create form where we can add a new team. 
+
+To team.service.ts add a function to add a team which will call POST method.
+
+```angular2html
+  create(team: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, team);
+  }
+```
+
+In app.component.html add link to page with the new team form.
+
+```angular2html
+  <li>
+    <a routerLink="/team/new">New team</a>
+  </li>
+```
+
+In new-team.component.ts add variable for data binding: ```team: any = {};```
+It's important to initialize empty object. Without that you will see error in browser console. 
+
+In new-team.component.html add input for team name and button to save data.
+But before that you have to add in imports section extra module "FormsModule" in class my-team.module.ts. 
+```angular2html
+<div>
+  <label>Team name:
+    <input [(ngModel)]="team.name" placeholder="team name">
+  </label>
+</div>
+```  
+Now in the corespondent component (new-team.component.ts) add function create() which call function create(object: any) from service TeamService. 
+```angular2html
+  create() { }
+```
+and on the page add Save button. After some changes html should look like:
+```angular2html
+<div>
+  <form>
+    <label>Team name:
+      <input [(ngModel)]="team.name" placeholder="team name" id="teamName" name="teamName">
+    </label>
+    <button type="button" (click)="create()">Add</button>
+  </form>
+</div>
+```
+
+To save data you must inject TeamService into NewTeamComponent and call function create.
+To inject service use constructor:
+```angular2html
+  constructor(private teamService: TeamService) {
+  }
+```
+and after that in NewTeamComponent change implementation of function create():
+```angular2html
+  create() {
+    this.teamService.create(this.team).subscribe(result => {
+        this.team = {};
+      },
+      error1 => {
+        console.log(error1);
+      }
+    );
+  }
+```
+
+
+
+  
 
 ## ADD BOOTSTRAP CSS

@@ -5,11 +5,13 @@ import {MyTeamRoutingModule} from './my-team-routing.module';
 import {TeamListComponent} from './team-list/team-list.component';
 import {NewTeamComponent} from './new-team/new-team.component';
 import {TeamService} from './team.service';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    MyTeamRoutingModule
+    MyTeamRoutingModule,
+    FormsModule,
   ],
   declarations: [TeamListComponent, NewTeamComponent],
   providers: [TeamService]
