@@ -10,3 +10,22 @@
   </tr>
   </tbody>
 </table>
+<hr>
+
+<div>
+  <h4>Teams by angular material</h4>
+  <mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="teamName">
+      <mat-header-cell *matHeaderCellDef> Team name</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+

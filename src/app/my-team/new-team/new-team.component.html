@@ -10,3 +10,16 @@
     <button type="button" (click)="create()" class="btn btn-success">Add</button>
   </form>
 </div>
+<hr>
+<!-- Material style -->
+<div>
+  <h4>Add new team using material style</h4>
+  <form>
+    <mat-form-field>
+      <input matInput placeholder="Team name" id="teamNameMaterial" name="teamName"[(ngModel)]="team.name">
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" (click)="create()">Add</button>
+    </div>
+  </form>
+</div>

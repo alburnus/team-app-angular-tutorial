@@ -261,6 +261,125 @@ Now is time to add some classes to our html elements :)
 </div>
 ```
 
+## Angular Material
+
+### Install
+* $ npm install --save @angular/material @angular/animations @angular/cdk
+* $ npm install --save hammerjs
+
+Add hammerjs to angular-cli.json in node "apps":
+````
+"scripts": [
+   "../node_modules/hammerjs/hammer.min.js"
+ ],
+````
+hammerjs is library which recognized gesture made by touch, mouse, pointer events. 
+ 
+### Add material forms with inputs to existing page
+````
+<div>
+  <h4>Add new team using material style</h4>
+  <form>
+    <mat-form-field>
+      <input matInput placeholder="Team name" id="teamNameMaterial" name="teamName"[(ngModel)]="team.name">
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" (click)="create()">Add</button>
+    </div>
+  </form>
+</div>
+````
+In global style.css import style sheet:
+
+```@import '~@angular/material/prebuilt-themes/indigo-pink.css';```
+
+Add in section "imports" required module - in this example add to my-team.module.ts:
+
+```angular2html
+import {
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+(...)
+
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule
+```
+
+Open page where you can add team. 
+
+### Add material list to existing page
+
+Add required module to my-team.module.ts:
+```angular2html
+
+(...)
+
+    MatTableModule,
+    MatPaginatorModule,
+```
+
+Add some codes in team-list.component.html
+```angular2html
+<div>
+  <h4>Teams by angular material</h4>
+  <mat-table [dataSource]="dataSource" >
+
+    <ng-container matColumnDef="teamName">
+      <mat-header-cell *matHeaderCellDef> Team name</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+```
+
+Add some codes in team-list.component.ts
+```angular2html
+
+  displayedColumns = ['teamName'];
+  dataSource: MatTableDataSource<any>;
+  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngOnInit() {
+    this.teamService.getAll().subscribe(results => {
+        this.teams = results;
+        this.dataSource = new MatTableDataSource<any>(this.teams);
+        this.dataSource.paginator = this.paginator;
+      },
+      error1 => {
+        console.log('Error:' + error1);
+      }
+    );
+  }
+
+```
+
+When you see below error:
+
+```ERROR in node_modules/@angular/cdk/a11y/typings/focus-monitor/focus-monitor.d.ts(117,30): error TS2315: Type 'ElementRef' is not generic.```
+
+then set in package.json same version for library:
+```angular2html
+"@angular/material": "^5.2.0",
+"@angular/core": "^5.2.0",
+"@angular/cdk": "^5.2.0",
+```
+
+
+
 ## USEFUL LINKS
 - https://getbootstrap.com/docs/4.1/getting-started/introduction/ 
 - https://angular.io/guide/quickstart 
