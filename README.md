@@ -293,6 +293,14 @@ In global style.css import style sheet:
 
 ```@import '~@angular/material/prebuilt-themes/indigo-pink.css';```
 
+Available are styles:
+```angular2html
+    deeppurple-amber.css
+    indigo-pink.css
+    pink-bluegrey.css
+    purple-green.css
+```
+
 Add in section "imports" required module - in this example add to my-team.module.ts:
 
 ```angular2html
